@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.add_dependency "cells", ">= 3.8.2"
   s.add_dependency "markdown-ruby-china"
   s.add_dependency 'facebox-rails'
+  s.add_dependency 'acts_as_paranoid_boolean_column'
 
   s.files = `git ls-files`.split("\n")
 end
