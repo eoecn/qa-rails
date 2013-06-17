@@ -1,0 +1,25 @@
+%div.markdownBox
+  %div.ask_nav.fix
+    %span= is_ask ? "我要提问" : "添加回复"
+  %div.convert_tags.fix
+    %span.edit_button.on 编辑
+    %span.preview_button 预览
+  %div.textareaBox.fix
+    %span.avatar
+      %img{:src => raw("<%= QARails.jsfun_user_avatar_url(" + (is_ask ? "eoe.uid" : "QARails.jsfun_user_info().uid") + ") %>")}
+    %div.textarea_text
+      = text_area_tag (is_ask ? "post_topic" : "post_comment")
+    %div.preview_box.hide
+      %p.preview_title
+      %div.preview_content
+    - tmp = is_ask ? "ask" : "reply"
+    %a.btn.pointer{:class => tmp, :type => tmp}= is_ask ? "提问" : "回复"
+  %ol.textarea_exp
+    - if is_ask
+      %li 第一行是标题
+    %li
+      = "支持 Markdown 格式，"
+      %strong **粗体**
+      = "、~~删除线~~、"
+      %code `单行代码`
+      ="、![Alt text](http://foo.com/bar.jpg) 显示图片"

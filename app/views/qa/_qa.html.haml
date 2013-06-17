@@ -1,0 +1,156 @@
+-  if protect_against_forgery?
+  = javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.to_json};"
+
+%script{:type=>"text/template", :id=>"qa_list_template"}
+  %div#qa
+    %div.loading
+    %div.topic_list.hide
+      %div.topic_content.fix
+        %ul
+      #kaminari.fix
+      = render :partial => "qa/textarea", :locals => {:is_ask => true}
+    %div.topic_show.hide
+
+%script{:type=>"text/template", :id=>"qa_list_topic_template"}
+  = raw("<% if (_.isEmpty(this.topics)) { %>")
+  %div.empty_text
+    = raw("<%= QARails.empty_topics_text %>")
+  = raw("<% } else { %>")
+  = raw("<% _.each(this.topics, function(topic) { %>")
+  %li{:topic_id => raw("<%= topic.id %>")}
+    %a.user
+      %span.avatar
+        %img{:src => raw("<%= QARails.jsfun_user_avatar_url(topic.uid) %>")}
+    %div.box
+      %span.title.pointer= raw("<%= QARails.escapeHTML(topic.title) %>")
+      %div
+        %a.uname
+          = raw("<%= topic.uname %>")
+
+        = raw("<% if (_.isEmpty(topic.last_reply)) { %>")
+        = "于"
+        %time.timeago{:datetime => raw("<%= topic.created_at %>")}
+        = "发布"
+        = raw("<% } else { %>")
+        = "最后由"
+        = raw("<%= topic.last_reply.uname %>")
+        = "于"
+        %time.timeago{:datetime => raw("<%= topic.last_reply.created_at %>")}
+        = "回复"
+        = raw("<% } %>")
+
+      %em= raw("<%= topic.replies_count %>")
+  = raw("<% }); %>")
+  = raw("<% } %>")
+
+
+%script{:type=>"text/template", :id=>"qa_show_template"}
+  %div.back_to_list.pointer 后退
+  %div.show{:topic_id => raw("<%= this.topic.id %>")}
+    %div.head
+      %div.left
+        %div.title= raw("<%= QARails.escapeHTML(this.topic.title) %>")
+        %div.detail
+          %span.uname= raw("<%= this.topic.uname %>")
+          %span.time
+            %span 于
+            %time.timeago{:datetime => raw("<%= this.topic.created_at %>")}
+            %span 发布
+          %span.view_count= raw("<%= this.topic.view_count %>次阅读")
+      %div.right
+        %span.avatar
+          %img{:src => raw("<%= QARails.jsfun_user_avatar_url(this.topic.uid) %>")}
+    %div.body
+      %div.content= raw("<%= this.topic.content %>")
+    %div.comments
+      = raw("<% _.each(this.replies, function(reply) { %>")
+      %div.comment
+        %span.avatar
+          %img{:src => raw("<%= QARails.jsfun_user_avatar_url(reply.uid) %>")}
+        %span.user
+          %span.uname= raw("<%= reply.uname %>")
+          %span.content= raw("<%= reply.content %>")
+        %span.time
+          %time.timeago{:datetime => raw("<%= reply.created_at %>")}
+      = raw("<% }); %>")
+    = render :partial => "qa/textarea", :locals => {:is_ask => false}
+
+
+:css
+  /* facebox-rails.gem */
+  #qa .loading {background-image: url(/assets/facebox/loading.gif); background-repeat: no-repeat; background-position: center center; height: 50px;}
+
+  #qa .topic_list {margin-top:-20px;}
+  #qa .hide {display:none;}
+  #qa .pointer {cursor:pointer}
+  #qa .highlighttable{display:block;width:100%;margin:10px 0;overflow-x:auto;overflow-y:hidden;border:1px solid #ccc;}
+
+
+  #qa .topic_content{margin:10px 0;}
+  #qa .topic_content li{float:left;width:100%;padding:10px 0;overflow:hidden;border-bottom:1px solid #ccc;}
+  #qa .topic_content li ul li,#qa .topic_content li ol li{float:none;width:auto;padding:0;border:none;}
+  #qa .topic_content .user{float:left;width:48px;margin-left:25px;}
+  #qa .topic_content .user span.avatar{display:block;height:48px;overflow:hidden;}
+  #qa .topic_content .user span.uname, .markdownBox .uname{display:block;width:48px;height:24px;line-height:24px;overflow:hidden;text-align:center;color:#555;}
+  #qa .topic_content .box{float:right;width:800px;height:auto !important;max-height:150px;overflow:hidden;font-size:12px;margin-right:25px;position:relative;}
+  #qa .topic_content .box .title{color:#0073de;font-size:14px;}
+  #qa .topic_content .box a.uname{color:#999;}
+  #qa .topic_content .box em{display:inline-block;padding:0 8px;color:#fff;font-size:14px;font-style:normal;cursor:pointer;background-color:#1c7fdb;border-radius:12px;position:absolute;right:0;top:10px;}
+  #qa .topic_content .box .view_count{float:right;padding:0 5px;margin-left:10px;font-size:14px;color:#fff;border-radius:4px;background-color:#1c7fdb;}
+  #qa .topic_content .box .content{font-family:"宋体";line-height:24px;margin-top:5px;}
+  #qa .topic_content .empty_text{padding:50px 0;text-align:center;font-size:16px;}
+  
+  #qa .pagination{float:right;margin-top:10px;margin-right:25px;border:1px solid #e6e6e6;border-left:none;}
+  #qa .pagination span{cursor:pointer;display:inline-block;border-left:1px solid #e6e6e6;padding:5px 10px;}
+  #qa .pagination span.page a{color:#0073de;}
+  #qa .pagination span.current{color:#999;}
+
+  #qa .topic_show .back_to_list{width:16px;height:16px;overflow:hidden;text-indent:-9999px;background:url(/assets/learn_btn.png) -212px 0 no-repeat;position:absolute;left:10px;top:14px;}
+  #qa .topic_show .head{padding:0 35px 10px;overflow:hidden;border-bottom:1px solid #ddd;}
+  #qa .topic_show .head .left{float:left;width:530px;}
+  #qa .topic_show .head .left .detail{margin-top:10px;}
+  #qa .topic_show .head .left .title{font-size:20px;color:#0073de;}
+  #qa .topic_show .head .left .uname{color:#666;font-weight:bold;}
+  #qa .topic_show .head .left .time{color:#999;padding:0 8px;}
+  #qa .topic_show .head .right{float:right;width:48px;height:48px;overflow:hidden;}
+  #qa .topic_show .body,.topic_show .comment{padding:15px 25px;overflow:hidden;border-bottom:1px solid #ddd;}
+  #qa .topic_show .body .content code,#qa .topic_content .box .content code,#qa .preview_box .preview_content code{padding:1px 3px;border:1px solid #dedede;border-radius:3px;background-color:#fafafa;}
+  #qa .topic_show .comment{border-bottom:1px dashed #ddd;padding:15px 0;margin:0 25px;}
+  #qa .topic_show .comment .avatar,#qa .comment .avatar,#qa .textareaBox .avatar{float:left;width:48px;height:48px;overflow:hidden;margin-right:15px;_display:inline;}
+  #qa .topic_show .comment .user{float:left;width:710px;}
+  #qa .topic_show .comment .user .uname{color:#666;font-weight:bold;}
+  #qa .topic_show .comment .user .content{display:block;line-height:24px;}
+  #qa .topic_show .comment .time{float:right;color:#999;}
+
+  /*提问框*/
+  #qa .textarea_text,#qa .preview_box,#qa.replay_textarea{float:left;margin-right:15px;border:1px solid #ccc;position:relative;zoom:1;}
+  #qa .textarea_text textarea,#qa .replay_textarea textarea{float:left;display:block;width:720px;height:80px;resize:none;margin:0;padding:0;border:none;}
+  #qa .markdownBox a.btn {float:left;width:62px;height:32px;overflow:hiddn;line-height:32px;text-indent:-9000px;background:url(/assets/learn_btn.png) -115px 0 no-repeat;}
+  #qa .markdownBox a.btn.reply {background-position:-53px 0;}
+  #qa .markdownBox{margin:20px 0 0;padding:36px 15px 20px;border-radius: 0 0 4px 4px;position:relative;}
+  #qa .markdownBox .ask_nav span{float:left;width:127px;height:46px;padding-left:30px;font-size:16px;line-height:38px;text-align:left;color:#fff;background:url(/assets/askbg.png) 0 0 no-repeat;position:absolute;left:-5px;top:-5px;}
+  #qa .markdownBox .convert_tags{margin:10px 0 5px 83px;}
+  #qa .markdownBox .convert_tags span{padding:2px 8px;border-radius:3px;cursor:pointer;}
+  #qa .markdownBox .convert_tags span:hover,#qa .markdownBox .convert_tags span.on{background-color:#b1b1b1;color:#fff;}
+  #qa .markdownBox .textareaBox{margin:0 10px;}
+  #qa .markdownBox .textarea_exp{margin-left:73px;margin-top:5px;}
+  #qa .markdownBox .textarea_exp li{list-style:none;padding-left:15px;line-height:22px;background:url(/assets/dot2.png) 0 11px no-repeat;}
+  #qa .markdownBox .textarea_exp li code{border:1px solid #dedede;background-color:#f8f8f8;border-radius:3px;}
+  #qa .preview_box{width:720px;height:auto;min-height:80px;background-color:#fff;}
+  #qa .preview_box .preview_title{color:#0073de;font-size:14px;}
+  #qa .preview_box .preview_content{font-family:"宋体";line-height:24px;color:#555;font-size:14px;}
+
+
+:javascript
+  var QARails = {};
+  QARails.domid                   = #{@qa_options[:domid].to_json};
+  QARails.category_id             = #{@qa_options[:category_id].to_json};
+  QARails.jsfun_user_avatar_url   = #{@qa_options[:jsfun_user_avatar_url]};
+  QARails.jsfun_user_info         = #{@qa_options[:jsfun_user_info]};
+  QARails.kaminari_config         = {page: #{params[:page] || 1}, per: #{params[:per] || 5}};
+  QARails.default_ajax_data       = {authenticity_token: AUTH_TOKEN, category_id: QARails.category_id};
+  QARails.escapeHTML              = function(text) { return $('<div/>').text(text).html(); }
+  QARails.empty_topics_text       = #{(@qa_options[:empty_topics_text] || '还没有相关讨论，等你来提问哦 :)').to_json};
+  QARails.notice_div              = #{@qa_options[:notice_div]};
+
+= javascript_include_tag "qa-rails"
