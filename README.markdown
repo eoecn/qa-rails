@@ -18,5 +18,10 @@ qa_setup "#content .SectionBox .SectionList .forum",
 *   https://github.com/radar/forem
 *   https://github.com/discourse/discourse vendor下的gems值得一看
 
+### 贡献人员名单
+*   产品: @iceskysl
+*   rails, javascript: @mvj3
+*   css: @xiang97
+
 ### License
 MIT
