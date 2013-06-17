@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = s.summary
   s.authors     = ["David Chen"]
   s.email       = 'mvjome@gmail.com'
-  s.homepage    = 'http://rubygems.org/gems/qa-rails'
+  s.homepage    = 'http://github.com/eoecn/qa-rails'
 
   s.add_dependency "rails"
   s.add_dependency "haml"
