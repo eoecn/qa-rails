@@ -2,8 +2,8 @@ Gem::Specification.new do |s|
   s.name        = 'qa-rails'
   s.version     = '0.1'
   s.date        = '2013-04-08'
-  s.summary     = ""
-  s.description = ""
+  s.summary     = File.read("README.markdown").split(/===+/)[0].strip
+  s.description = s.summary
   s.authors     = ["David Chen"]
   s.email       = 'mvjome@gmail.com'
   s.homepage    = 'http://rubygems.org/gems/qa-rails'

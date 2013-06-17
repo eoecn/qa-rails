@@ -2,7 +2,6 @@
 
 require 'markdown-ruby-china'
 
- 
 module QA_Rails
   module ContentMarkdownCache
     extend ActiveSupport::Concern
@@ -17,8 +16,6 @@ module QA_Rails
     end
   end
 end
-
-# TODO load git://github.com/pragmaticly/smart-time-ago.git
 
 module ApplicationHelper
   # Setup QA mini forum
