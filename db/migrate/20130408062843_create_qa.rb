@@ -32,8 +32,3 @@ class CreateQa < ActiveRecord::Migration
   end
 
 end
-
-__END__
-class CreateQa < ActiveRecord::Migration
-  change_column :qa_replies, :uname, :string
-end
