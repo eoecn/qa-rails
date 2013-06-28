@@ -14,6 +14,12 @@ qa_setup "#content .SectionBox .SectionList .forum",
          :notice_div => '$(".SectionBox[anchor=qa] .SectionHead .hasNew")'
 ```
 
+### 截图
+
+[<img src="https://raw.github.com/eoecn/qa-rails/eoecn/screenshots/qa_list.png">](列表)
+[<img src="https://raw.github.com/eoecn/qa-rails/eoecn/screenshots/qa_show.png">](详情)
+
+
 ### 其他论坛参考
 *   https://github.com/radar/forem
 *   https://github.com/discourse/discourse vendor下的gems值得一看
