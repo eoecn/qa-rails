@@ -1,9 +1,11 @@
-Rails 迷你问答论坛插件
+qa-rails
 ==================================================================
+Rails Engine. a mini forum provided by only a simple helper, written in Backbones.js.
 
-### 使用
-1.   添加qa-rails数据库表，bundle exec rake db:migrate
-2.   在view里引用论坛插件，示例:
+Usage
+------------------------------------------------------------------
+1.   Ad qa-rails tables，bundle exec rake db:migrate
+2.   config it in view:
 
 ```ruby
 qa_setup "#content .SectionBox .SectionList .forum",
@@ -14,20 +16,24 @@ qa_setup "#content .SectionBox .SectionList .forum",
          :notice_div => '$(".SectionBox[anchor=qa] .SectionHead .hasNew")'
 ```
 
-### 截图
+Screenshots
+------------------------------------------------------------------
 
-[<img src="https://raw.github.com/eoecn/qa-rails/eoecn/screenshots/qa_list.png">](列表)
-[<img src="https://raw.github.com/eoecn/qa-rails/eoecn/screenshots/qa_show.png">](详情)
+[<img src="https://raw.github.com/eoecn/qa-rails/eoecn/screenshots/qa_list.png">](index)
+[<img src="https://raw.github.com/eoecn/qa-rails/eoecn/screenshots/qa_show.png">](show)
 
 
-### 其他论坛参考
+Other forums written in Ruby and Javascript
+------------------------------------------------------------------
 *   https://github.com/radar/forem
-*   https://github.com/discourse/discourse vendor下的gems值得一看
+*   https://github.com/discourse/discourse see /vendor/gems
 
-### 贡献人员名单
+Contributors
+------------------------------------------------------------------
 *   产品: @iceskysl
 *   rails, javascript: @mvj3
 *   css: @xiang97
 
-### License
+License
+------------------------------------------------------------------
 MIT

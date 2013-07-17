@@ -1,12 +1,13 @@
 Gem::Specification.new do |s|
   s.name        = 'qa-rails'
-  s.version     = '0.1.1'
-  s.date        = '2013-06-28'
-  s.summary     = File.read("README.markdown").split(/===+/)[0].strip
+  s.version     = '0.1.2'
+  s.date        = '2013-07-17'
+  s.summary     = File.read("README.markdown").split(/===+/)[1].strip.split("\n")[0]
   s.description = s.summary
   s.authors     = ["David Chen"]
   s.email       = 'mvjome@gmail.com'
   s.homepage    = 'http://github.com/eoecn/qa-rails'
+  s.license     = 'MIT'
 
   s.add_dependency "rails"
   s.add_dependency "haml"
